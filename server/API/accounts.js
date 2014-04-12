@@ -24,16 +24,14 @@ accountSchema.methods.generateHash = function(password) {
 
 // checking if password is valid (Password decryption)
 accountSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 // Setup account Model
 var Account = exports.Account = mongoose.model('Account', accountSchema);
-	
-
+var encryption = new Account();
 // add an account to the database
 var add = function(req, res){
-	console.log(req.body);
 	if(!req.body.name){
 		res.json(400,{
 			message: "Error! trying to add an account with no Name."
@@ -55,8 +53,8 @@ var add = function(req, res){
 			name 			: req.body.name,	
 			comName			: req.body.comName,	
 			phone			: req.body.phone,	
-	        email       	: req.body.Email.toLowerCase(),		// Email
-	        password    	: generateHash(req.body.password) // password
+	        email       	: req.body.email.toLowerCase(),		// Email
+	        password    	: encryption.generateHash(req.body.password) // password
 		},
 		function(err,account){
 			if(err){
@@ -100,7 +98,7 @@ var update = function(req,res){
 			res.json(500,err);
 		}else{
 			_.extend(doc, req.body);
-			doc.password = generateHash(req.body.password);
+			doc.password = encryption.generateHash(req.body.password);
 			doc.save();
 			res.json(200,doc);
 		}
@@ -110,7 +108,7 @@ var update = function(req,res){
 // set Routes
 exports.setup = function (app, auth) {
     app.get('/API/accounts', list);
-    app.post('/API/accounts', auth, add);
+    app.post('/API/accounts', add);
     app.put('/API/accounts/:id', auth, update);
     app.delete('/API/accounts/:id', auth, remove);
 };

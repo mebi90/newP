@@ -8,7 +8,7 @@ module.exports = function(passport) {
   // Define the strategy to be used by PassportJS
   passport.use(new LocalStrategy(
     function(user, pass, done) {
-      var data = _.findWhere(User, {email: user.toLowerCase(), password: pass})
+      var data = _.findWhere(User, {email: user.toLowerCase(), password: Account.validPassword(pass)})
       if (data != undefined) 
         return done(null, data);
 
