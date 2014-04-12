@@ -1,0 +1,75 @@
+<head>
+  <link rel="stylesheet" href="css/signInUP.css" />      
+</head>
+<!--
+<div class="row">
+  <div class="large-3 columns">...</div>
+  <div class="large-6 columns">...</div>
+  <div class="large-3 columns">...</div>
+</div>
+-->
+<div class="row" ng-controller="AccountController" style="margin-top: 60px;">
+  <div class="large-3 columns">&nbsp</div>
+  <div class="large-6 columns">
+    <div class="signup-panel">
+      <p class="welcome"> Placements !</p>
+      <form name = "signUp">
+        <!--form-->
+        <!--Name-->
+        <div class="row collapse">
+          <div class="small-2 columns">
+            <span class="prefix"><i class="fi-torso"></i></span>
+          </div>
+          <div class="small-10  columns">
+            <input type="text" ng-model="user.name" name="r1" required placeholder="Full Name">
+          </div>
+        </div>
+        <!--Email-->
+        <div class="row collapse">
+          <div class="small-2 columns">
+            <span class="prefix"><i class="fi-mail"></i></span>
+          </div>
+          <div class="small-10  columns">
+            <input type="text" ng-model="user.email" name="r2" required placeholder="Email - You will log in with this email">
+          </div>
+        </div>
+        <!--Password-->
+        <div class="row collapse">
+          <div class="small-2 columns ">
+            <span class="prefix"><i class="fi-lock"></i></span>
+          </div>
+          <div class="small-8 columns">
+            <input type='{{showPassword}}' name="r3" ng-model="user.password" required placeholder="Password">
+          </div>
+          <div class="small-2 columns">
+            <a class="secondary button postfix" ng-click="passwordToggle()">{{pAction}}</a>
+          </div>
+        </div>
+        <!--Company Name-->
+        <div class="row collapse">
+          <div class="small-2 columns ">
+            <span class="prefix"><i class="fi-shopping-bag"></i></span>
+          </div>
+          <div class="small-10 columns ">
+            <input type="text" ng-model="user.comName" name="r4" required placeholder="Company Name">
+          </div>
+        </div>
+        <!--Phone Number-->
+        <div class="row collapse">
+          <div class="small-2 columns ">
+            <span class="prefix"><i class="fi-telephone"></i></span>
+          </div>
+          <div class="small-10 columns ">
+            <input type="text" ng-model="user.phone" placeholder="Phone Number (Optional)">
+          </div>
+        </div>
+        <!--END form-->
+      </form>
+        <span ng-show = "signUp.r1.$valid && signUp.r2.$valid && signUp.r3.$valid && signUp.r4.$valid">
+            <a class="button "ng-click="addAccount(user.name, user.email, user.password,user.comName,user.phone)">Sign Up</a>
+          </span>
+        <p>Already have an account? <a href="#/login">Sign In! &raquo</a></p>
+    </div>
+  </div>
+  <div class="large-3 columns">&nbsp</div>
+</div>

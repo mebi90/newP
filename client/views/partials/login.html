@@ -1,0 +1,47 @@
+<head>
+  <link rel="stylesheet" href="css/signInUP.css" />      
+</head>
+<!--
+<div class="row">
+  <div class="large-3 columns">...</div>
+  <div class="large-6 columns">...</div>
+  <div class="large-3 columns">...</div>
+</div>
+-->
+<div class="row" ng-controller="LoginController" style="margin-top: 60px;">
+  <div class="large-3 columns">&nbsp</div>
+  <div class="large-6 columns">
+    <div class="signup-panel">
+      <p class="welcome"> Placements !</p>
+      <form>
+        <!--Form-->
+        <!--Email-->
+        <div class="row collapse">
+          <div class="small-2 columns">
+            <span class="prefix"><i class="fi-mail"></i></span>
+          </div>
+          <div class="small-10  columns">
+            <input type="text" ng-model="signInEmail" placeholder="Email">
+          </div>
+        </div>
+        <!--Password-->
+        <div class="row collapse">
+          <div class="small-2 columns ">
+            <span class="prefix"><i class="fi-lock"></i></span>
+          </div>
+          <div class="small-8 columns">
+            <input type='{{showPassword}}' ng-model="signInPassword" required placeholder="Password">
+          </div>
+          <div class="small-2 columns">
+            <a class="secondary button postfix" ng-click="passwordToggle()">{{pAction}}</a>
+          </div>
+        </div>
+        <!--End Form-->
+      </form>
+      <a ng-click="accountSignIn(signInEmail,signInPassword)" href="#" class="button ">Sign In</a>
+       <p>Don't have an account? <a href="#/signUp">Sign Up! &raquo</a></p>
+	     <p ng-click="resetPassword()">Don't remember password? <a href="#/signIn">Reset &raquo</a></p>
+    </div>
+  </div>
+  <div class="large-3 columns">&nbsp</div>
+</div>
