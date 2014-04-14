@@ -21,7 +21,7 @@
             <span class="prefix"><i class="fi-mail"></i></span>
           </div>
           <div class="small-10  columns">
-            <input type="text" ng-model="user.email" placeholder="Email">
+            <input type="text" ng-model="signInEmail" placeholder="Email">
           </div>
         </div>
         <!--Password-->
@@ -30,23 +30,17 @@
             <span class="prefix"><i class="fi-lock"></i></span>
           </div>
           <div class="small-8 columns">
-            <input type='{{showPassword}}' ng-model="user.password" required placeholder="Password">
+            <input type='{{showPassword}}' ng-model="signInPassword" required placeholder="Password">
           </div>
           <div class="small-2 columns">
             <a class="secondary button postfix" ng-click="passwordToggle()">{{pAction}}</a>
           </div>
         </div>
-        <!--ERROR Invalid Credentials (if any) -->
-        <div class="row collapse" ng-show="user.error">
-          <div class="alert-box alert">
-            Invalid Credentials.
-          </div>
-        </div>
         <!--End Form-->
       </form>
-      <a ng-click="accountSignIn()" class="button ">Sign In</a>
+      <a ng-click="accountSignIn(signInEmail,signInPassword)" class="button ">Sign In</a>
        <p>Don't have an account? <a href="#/signUp">Sign Up! &raquo</a></p>
-       <p ng-click="resetPassword()">Don't remember password? <a href="#/signIn">Reset &raquo</a></p>
+	     <p ng-click="resetPassword()">Don't remember password? <a href="#/signIn">Reset &raquo</a></p>
     </div>
   </div>
   <div class="large-3 columns">&nbsp</div>

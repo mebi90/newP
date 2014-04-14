@@ -30,6 +30,7 @@ accountSchema.methods.validPassword = function(password) {
 // Setup account Model
 var Account = exports.Account = mongoose.model('Account', accountSchema);
 var encryption = new Account();
+
 // add an account to the database
 var add = function(req, res){
 	if(!req.body.name){

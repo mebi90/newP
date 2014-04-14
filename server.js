@@ -22,19 +22,13 @@ mongoose.connect('mongodb://localhost:27017/test');
 // load out passport settings 
 require('./server/passport')(passport); 
 
-// Define a middleware function to be used for every secured routes
-var auth = function(req, res, next){
-if (!req.isAuthenticated()) 
-  res.send(401);
-else
-  next();
-};
 //==============================================================================
 
 app.configure(function() {
-	
 	app.use(express.logger('dev')); 
   	app.use(express.cookieParser('keyboard cat'));
+  	app.use(express.bodyParser());
+	app.use(express.methodOverride());
   	app.use(express.session({ cookie: { maxAge: 60000 }}));
 	app.use(express.json());
 	app.use(express.urlencoded());
@@ -47,12 +41,16 @@ app.configure(function() {
 	app.use(app.router);
 });
 
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+}
+
 // routes ======================================================================
-require('./server/routes.js')(app, passport); 
+require('./server/routes.js')(app, passport, auth); 
 
 //install API
 accounts.setup(app, auth);
-
 
 // Check DB connection.=========================================================
 var db = mongoose.connection; 

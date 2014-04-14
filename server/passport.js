@@ -3,16 +3,22 @@ var LocalStrategy    = require('passport-local').Strategy,
     User = require('./API/accounts').Account;
 
 module.exports = function(passport) {
-  //==============================================================================
-  // PassportJS conf.
-  // Define the strategy to be used by PassportJS
+//==================================================================
+// Define the strategy to be used by PassportJS
   passport.use(new LocalStrategy(
-    function(user, pass, done) {
-      var data = _.findWhere(User, {email: user.toLowerCase(), password: Account.validPassword(pass)})
-      if (data != undefined) 
-        return done(null, data);
+    function(email, password, done) {
+      User.findOne({ 'email' :  email }, function(err, user) {
+        // if there are any errors, return the error
+        if (err)
+          return done(err);
+        if(!user)
+          return done(null, false, { message: 'Incorrect username.' });
+        if(!user.validPassword(password))
+          return done(null, false, { message: 'Oops! Wrong password.' });
 
-      return done(null, false, { message: 'Invalid User.' });
+        // ALL FINE return User.
+        return done(null, user);
+      });
     }
   ));
 
@@ -24,5 +30,14 @@ module.exports = function(passport) {
   passport.deserializeUser(function(user, done) {
       done(null, user);
   });
+
+  // Define a middleware function to be used for every secured routes
+  auth = function(req, res, next){
+    if (!req.isAuthenticated()) 
+      res.send(401);
+    else
+      next();
+  };
+//==================================================================
 };
 

@@ -1,13 +1,18 @@
-module.exports = function(app, passport) {
-
-	//==================================================================
-	// routes
+module.exports = function(app, passport, auth) {
+//======================================================================
+// routes
 	app.get('/', function(req, res){
-	  res.render('index', { title: 'Placements' });
+	  res.render('index', { title: 'Express' });
 	});
-	//==================================================================
 
-	//==================================================================
+	app.get('/users', auth, function(req, res){
+	  res.send([{name: "user1"}, {name: "user2"}]);
+	}); 
+//======================================================================
+
+//======================================================================
+// Forbidden == Don't mess with this == This take care of authentication
+//======================================================================
 	// route to test if the user is logged in or not
 	app.get('/loggedin', function(req, res) {
 	  res.send(req.isAuthenticated() ? req.user : '0');
@@ -23,5 +28,5 @@ module.exports = function(app, passport) {
 	  req.logOut();
 	  res.send(200);
 	});
-	//==================================================================
+//======================================================================
 };

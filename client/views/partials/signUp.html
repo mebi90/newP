@@ -8,7 +8,7 @@
   <div class="large-3 columns">...</div>
 </div>
 -->
-<div class="row" ng-controller="AccountController" style="margin-top: 60px;">
+<div class="row" ng-controller="SingUpController" style="margin-top: 60px;">
   <div class="large-3 columns">&nbsp</div>
   <div class="large-6 columns">
     <div class="signup-panel">
@@ -66,7 +66,7 @@
         <!--END form-->
       </form>
         <span ng-show = "signUp.r1.$valid && signUp.r2.$valid && signUp.r3.$valid && signUp.r4.$valid">
-            <a class="button "ng-click="addAccount(user.name, user.email, user.password,user.comName,user.phone)">Sign Up</a>
+            <a class="button "ng-click="SignUP(user.name, user.email, user.password,user.comName,user.phone)">Sign Up</a>
           </span>
         <p>Already have an account? <a href="#/login">Sign In! &raquo</a></p>
     </div>
