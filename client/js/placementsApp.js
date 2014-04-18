@@ -198,23 +198,32 @@ app.controller("LoginController",function ($scope, $http, _, $location, $rootSco
 
     // This function assumes all the emails in the accounts collection objects are unique.
     $scope.resetPassword = function(){
-        var email = prompt("Please enter the email you would like to send reset password");
-    
-        if(email != null){
-            // search for email given in the accounts list.
-            var getUser = _.findWhere(accounts, {email: email});
+      var email = prompt("Please enter the email you would like to send reset password");
+      // var accounts;
+      // $http.get('/API/accounts?email:'+email).success(function(data){
+      //   accounts = data;
+      // });
 
-            if(getUser != null){
-                $http.post('/sendmail', {email: email})
-                    .success(function (data){
-                    pw = data;
-                    alert("An email has been sent to " + email);  
-                    getUser.password = pw;
-                    $http.put('/API/accounts/'+ getUser._id , getUser);
-                }); 
-            }else{
-                alert("The email specified does not exist.");
-            }
-        }
+      if(email != null){
+        // search for email given in the accounts list.
+
+        $http.put('/API/accounts/R/'+ email)
+        .success(function (data){
+
+        });
+
+
+
+        $http.post('/sendmail', {email: email})
+          .success(function (data){
+          pw = data;
+          alert("An email has been sent to " + email);  
+          getUser.password = pw;
+          $http.put('/API/accounts/'+ getUser._id , getUser);
+        })
+        .error(function(){
+          alert("The email specified does not exist.");
+        }); 
+      }
     };
 });

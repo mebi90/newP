@@ -29,7 +29,7 @@ accountSchema.methods.validPassword = function(password) {
 
 // Setup account Model
 var Account = exports.Account = mongoose.model('Account', accountSchema);
-var encryption = new Account();
+var encryption = exports.encryption = new Account();
 
 // add an account to the database
 var add = function(req, res){
@@ -68,7 +68,6 @@ var add = function(req, res){
 			}
 		});
 	}
-
 };
 
 // remove account from database
@@ -91,7 +90,6 @@ var list = function(req, res){
 };
 
 // updates the element in the database.
-
 var update = function(req,res){
 
 	Account.findById(req.params.id, function(err,doc){
@@ -106,17 +104,46 @@ var update = function(req,res){
 	});
 };
 
+// Password Reset.
+var passwordReset = function(req,res){
+	var email = req.params.id;
+	Account.findOne({ 'email': email.toLowerCase() }, function(err,doc){
+		if(err){
+			res.json(500,err);
+		}else{
+			//_.extend(doc, req.body);
+			doc.password = encryption.generateHash(req.body.password);
+			doc.save();
+			res.json(200,doc);
+		}
+	});
+};
+
+
+// specific user.
+var specificUser = function(req, res){
+	//http://localhost:3000/API/AR/test@test.com
+	var email = req.params.id;
+	Account.findOne({ 'email': email.toLowerCase() }, function(err, user){
+		if(err){res.json(err);}
+		else{res.json(user);}	
+	});
+};
+
 // set Routes
 exports.setup = function (app, auth) {
-    app.get('/API/accounts', list);
+    app.get('/API/accounts/single/:id', specificUser);
     app.post('/API/accounts', add);
-    app.put('/API/accounts/:id', auth, update);
-    app.delete('/API/accounts/:id', auth, remove);
+    app.put('/API/accounts/R/:id', passwordReset);
+    app.get('/API/accounts', list);
+    app.put('/API/accounts/:id', update);
+    app.delete('/API/accounts/:id',  remove);
 };
 
 
 
-
+//http://localhost:3000/API/AR?email:mebi90@hotmail.com
+//http://cwbuecheler.com/web/tutorials/2014/restful-web-app-node-express-mongodb/
 
 
 

@@ -49,6 +49,9 @@ if ('development' == app.get('env')) {
 // routes ======================================================================
 require('./server/routes.js')(app, passport, auth); 
 
+// passwordReset ===============================================================
+require('./server/API/passwordReset.js')(app); 
+
 //install API
 accounts.setup(app, auth);
 
